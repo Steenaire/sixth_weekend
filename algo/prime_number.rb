@@ -34,10 +34,26 @@ RSpec.describe NumberTestor do
       expect(testor.is_prime?(2)).to eq(true)
     end
 
-    # it 'should return 25 25 if given 50' do
-    #   change = Change.new
-    #   expect(change.calculate_change(50)).to eq([25,25])
-    # end
+    it 'should return true if given 3' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(3)).to eq(true)
+    end
+
+    it 'should return false if given 4' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(4)).to eq(false)
+    end
+
+    it 'should return false if given 4' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(4)).to eq(false)
+    end
+
+    it 'should return true if given 191' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(191)).to eq(true)
+    end
+
 
   end
 end
