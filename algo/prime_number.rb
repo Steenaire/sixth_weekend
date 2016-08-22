@@ -13,7 +13,20 @@ class NumberTestor
       elsif number%3 == 0
         return false
       end
+
+      test_divisor = 5
+      test_iterator = 2
+
+      while test_divisor*test_divisor <= number
+        if number%test_divisor == 0
+          return false
+        end
+        test_divisor += test_iterator
+        test_iterator = 6-test_iterator
+      end
+      return true
     end
+    return false
   end
 
   # Second, implement the highest_prime_number_under method below. It should accept a number as
@@ -54,6 +67,20 @@ RSpec.describe NumberTestor do
       expect(testor.is_prime?(191)).to eq(true)
     end
 
+    it 'should return true if given 499' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(499)).to eq(true)
+    end
+
+    it 'should return false if given 973' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(973)).to eq(false)
+    end
+
+    it 'should return false if given 1' do
+      testor = NumberTestor.new
+      expect(testor.is_prime?(1)).to eq(false)
+    end
 
   end
 end
