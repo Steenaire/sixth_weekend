@@ -12,3 +12,59 @@
 # and which belongs in the Entry class.
 #
 # And... test your functionality using RSpec!
+class Thesaurus
+
+  attr_accessor :entries
+
+  def initialize
+    @entries = []
+  end
+
+  def add_entry(entry)
+    @entries << entry
+  end
+
+  def delete_entry(entry)
+    @entries -= [entry]
+  end
+
+end
+
+class Entry
+
+  attr_reader :word, :definition
+  attr_accessor :synonyms, :antonyms
+
+  def initialize(entry_info)
+    @word = entry_info[:word]
+    @definition = entry_info[:definition]
+    @synonyms = entry_info[:synonyms]
+    @antonyms = entry_info[:antonyms]
+  end
+
+  def add_synonym(synonym)
+    @synonyms << synonym
+  end
+
+  def add_antonym(antonym)
+    @antonyms << antonym
+  end
+
+end
+
+thesaurus = Thesaurus.new
+entry1 = Entry.new({word: "jump", definition: "Push oneself off a surface and into the air by using the muscles in one's legs and feet", synonyms: ["leap","spring","vault","hop"], antonyms: []})
+thesaurus.add_entry(entry1)
+thesaurus.entries.first.add_synonym("bound")
+entry2 = Entry.new({word: "release", definition: "Allow or enable to escape from confinement; set free", synonyms: ["free","liberate"], antonyms: ["capture","confine","imprison"]})
+thesaurus.add_entry(entry2)
+
+
+p thesaurus.entries.first.synonyms
+
+p thesaurus.entries.last.synonyms
+p thesaurus.entries.last.antonyms
+
+thesaurus.delete_entry(entry1)
+
+p thesaurus.entries
