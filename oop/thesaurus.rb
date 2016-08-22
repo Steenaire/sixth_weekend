@@ -12,6 +12,8 @@
 # and which belongs in the Entry class.
 #
 # And... test your functionality using RSpec!
+require 'rspec'
+
 class Thesaurus
 
   attr_accessor :entries
@@ -52,19 +54,46 @@ class Entry
 
 end
 
-thesaurus = Thesaurus.new
-entry1 = Entry.new({word: "jump", definition: "Push oneself off a surface and into the air by using the muscles in one's legs and feet", synonyms: ["leap","spring","vault","hop"], antonyms: []})
-thesaurus.add_entry(entry1)
-thesaurus.entries.first.add_synonym("bound")
-entry2 = Entry.new({word: "release", definition: "Allow or enable to escape from confinement; set free", synonyms: ["free","liberate"], antonyms: ["capture","confine","imprison"]})
-thesaurus.add_entry(entry2)
+RSpec.describe Thesaurus do
 
+  describe '#calculate_change' do
 
-p thesaurus.entries.first.synonyms
+    it 'should return any entries that have been added' do
+      thesaurus = Thesaurus.new
+      entry1 = Entry.new({word: "jump", definition: "Push oneself off a surface and into the air by using the muscles in one's legs and feet", synonyms: ["leap","spring","vault","hop"], antonyms: []})
+      thesaurus.add_entry(entry1)
+      thesaurus.entries.first.add_synonym("bound")
+      entry2 = Entry.new({word: "release", definition: "Allow or enable to escape from confinement; set free", synonyms: ["free","liberate"], antonyms: ["capture","confine","imprison"]})
+      thesaurus.add_entry(entry2)
+      expect(thesaurus.entries).to eq([entry1,entry2])
+    end
 
-p thesaurus.entries.last.synonyms
-p thesaurus.entries.last.antonyms
+    it 'should not return any entries that have been deleted' do
+      thesaurus = Thesaurus.new
+      entry1 = Entry.new({word: "jump", definition: "Push oneself off a surface and into the air by using the muscles in one's legs and feet", synonyms: ["leap","spring","vault","hop"], antonyms: []})
+      thesaurus.add_entry(entry1)
+      thesaurus.entries.first.add_synonym("bound")
+      entry2 = Entry.new({word: "release", definition: "Allow or enable to escape from confinement; set free", synonyms: ["free","liberate"], antonyms: ["capture","confine","imprison"]})
+      thesaurus.add_entry(entry2)
+      thesaurus.delete_entry(entry1)
+      expect(thesaurus.entries).to eq([entry2])
+    end
 
-thesaurus.delete_entry(entry1)
+    it 'should display all synonyms which have been added' do
+      thesaurus = Thesaurus.new
+      entry1 = Entry.new({word: "jump", definition: "Push oneself off a surface and into the air by using the muscles in one's legs and feet", synonyms: ["leap","spring","vault","hop"], antonyms: []})
+      thesaurus.add_entry(entry1)
+      thesaurus.entries.first.add_synonym("bound")
+      expect(thesaurus.entries.first.synonyms).to eq(["leap","spring","vault","hop","bound"])
+    end
 
-p thesaurus.entries
+    it 'should display all antonyms which have been added' do
+      thesaurus = Thesaurus.new
+      entry = Entry.new({word: "release", definition: "Allow or enable to escape from confinement; set free", synonyms: ["free","liberate"], antonyms: ["capture","confine"]})
+      thesaurus.add_entry(entry)
+      thesaurus.entries.first.add_antonym("imprison")
+      expect(thesaurus.entries.first.antonyms).to eq(["capture","confine","imprison"])
+    end
+
+  end
+end
