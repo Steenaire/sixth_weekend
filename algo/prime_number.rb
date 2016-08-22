@@ -5,7 +5,15 @@ require 'rspec'
 # divisible by itself and the number 1.
 class NumberTestor
   def is_prime?(number)
-
+    unless number == 1
+      if number <= 3
+        return true
+      elsif number%2 == 0
+        return false
+      elsif number%3 == 0
+        return false
+      end
+    end
   end
 
   # Second, implement the highest_prime_number_under method below. It should accept a number as
